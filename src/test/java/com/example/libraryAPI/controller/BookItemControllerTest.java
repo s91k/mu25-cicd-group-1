@@ -28,7 +28,7 @@ class BookItemControllerTest {
 
     @Test
     void findAllReturnsItems() throws Exception {
-        service.create(10L);
+        service.create(10);
 
         mockMvc.perform(get("/book-items"))
                 .andExpect(status().isOk())
@@ -46,7 +46,7 @@ class BookItemControllerTest {
 
     @Test
     void findByIdReturnsExistingItem() throws Exception {
-        service.create(10L);
+        service.create(10);
 
         mockMvc.perform(get("/book-items/1"))
                 .andExpect(status().isOk())

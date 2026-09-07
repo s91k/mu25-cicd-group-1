@@ -6,16 +6,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class BookItemRepository {
 
-    private final Map<Long, BookItem> items = new ConcurrentHashMap<>();
-    private final AtomicLong nextId = new AtomicLong(1);
+    private final Map<Integer, BookItem> items = new ConcurrentHashMap<>();
+    private final AtomicInteger nextId = new AtomicInteger(1);
 
-    public BookItem save(Long bookId) {
-        Long id = nextId.getAndIncrement();
+    public BookItem save(int bookId) {
+        int id = nextId.getAndIncrement();
         BookItem item = new BookItem(id, bookId);
         items.put(id, item);
         return item;
@@ -25,7 +25,7 @@ public class BookItemRepository {
         return List.copyOf(items.values());
     }
 
-    public BookItem findById(Long id) {
+    public BookItem findById(int id) {
         return items.get(id);
     }
 

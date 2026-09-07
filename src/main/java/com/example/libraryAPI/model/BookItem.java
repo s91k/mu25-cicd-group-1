@@ -2,19 +2,19 @@ package com.example.libraryAPI.model;
 
 public class BookItem {
 
-    private Long id;
-    private Long bookId;
+    private int id;
+    private int bookId;
 
-    public BookItem(Long id, Long bookId) {
+    public BookItem(int id, int bookId) {
         this.id = id;
         this.bookId = bookId;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public Long getBookId() {
+    public int getBookId() {
         return bookId;
     }
 }

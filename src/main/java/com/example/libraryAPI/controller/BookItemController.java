@@ -28,7 +28,7 @@ public class BookItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookItem> findById(@PathVariable Long id) {
+    public ResponseEntity<BookItem> findById(@PathVariable int id) {
         BookItem item = service.findById(id);
 
         if (item == null) {
@@ -42,7 +42,7 @@ public class BookItemController {
     public ResponseEntity<BookItem> create(
             @RequestBody CreateBookItemRequest request) {
 
-        if (request.getBookId() == null || request.getBookId() <= 0) {
+        if (request.getBookId() <= 0) {
             throw new ResponseStatusException(
                     BAD_REQUEST,
                     "BookId must be a positive number"

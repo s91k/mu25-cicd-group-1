@@ -19,19 +19,19 @@ class BookItemRepositoryTest {
 
     @Test
     void savedItemCanBeFound() {
-        BookItem item = repository.save(10L);
+        BookItem item = repository.save(10);
 
         BookItem found = repository.findById(item.getId());
 
         assertNotNull(found);
         assertEquals(item.getId(), found.getId());
-        assertEquals(10L, found.getBookId());
+        assertEquals(10, found.getBookId());
     }
 
     @Test
     void copiesGetUniqueIdsAndAreBothStored() {
-        BookItem first = repository.save(10L);
-        BookItem second = repository.save(10L);
+        BookItem first = repository.save(10);
+        BookItem second = repository.save(10);
 
         assertNotEquals(first.getId(), second.getId());
 
@@ -43,6 +43,6 @@ class BookItemRepositoryTest {
 
     @Test
     void missingIdReturnsNull() {
-        assertNull(repository.findById(99L));
+        assertNull(repository.findById(99));
     }
 }

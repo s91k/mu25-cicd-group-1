@@ -20,18 +20,17 @@ class BookItemServiceTest {
 
     @Test
     void validBookIdCreatesItem() {
-        BookItem item = service.create(10L);
+        BookItem item = service.create(10);
 
-        assertNotNull(item.getId());
-        assertEquals(10L, item.getBookId());
+        assertTrue(item.getId() > 0);
+        assertEquals(10, item.getBookId());
         assertEquals(item, repository.findById(item.getId()));
     }
 
     @Test
     void invalidBookIdDoesNotSaveAnything() {
-        assertThrows(IllegalArgumentException.class, () -> service.create(null));
-        assertThrows(IllegalArgumentException.class, () -> service.create(0L));
-        assertThrows(IllegalArgumentException.class, () -> service.create(-1L));
+        assertThrows(IllegalArgumentException.class, () -> service.create(0));
+        assertThrows(IllegalArgumentException.class, () -> service.create(-1));
 
         assertTrue(repository.findAll().isEmpty());
     }

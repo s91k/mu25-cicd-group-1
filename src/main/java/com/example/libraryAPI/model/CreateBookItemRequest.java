@@ -2,13 +2,13 @@ package com.example.libraryAPI.model;
 
 public class CreateBookItemRequest {
 
-    private Long bookId;
+    private int bookId;
 
-    public Long getBookId() {
+    public int getBookId() {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(int bookId) {
         this.bookId = bookId;
     }
 }
