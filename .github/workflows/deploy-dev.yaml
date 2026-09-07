@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/library-api:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/library-api-dev:latest
 
       - name: Trigger deployment to Render
         run: curl -X POST ${{ secrets.RENDER_DEV_DEPLOY_HOOK }}
