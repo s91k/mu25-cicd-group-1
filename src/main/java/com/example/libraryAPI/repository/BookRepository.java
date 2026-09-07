@@ -11,6 +11,12 @@ public class BookRepository {
 
     private final List<Book> books = new ArrayList<>();
 
+    public BookRepository() {
+        books.add(new Book(1, "The Hobbit", 1));
+        books.add(new Book(2, "1984", 2));
+        books.add(new Book(3, "Twilight", 3));
+    }
+
     public List<Book> findAll() {
         return books;
     }
