@@ -1,8 +1,5 @@
-package com.example.libraryAPI.loan.api;
+package com.example.libraryAPI.exception;
 
-import com.example.libraryAPI.loan.service.BookItemAlreadyBorrowedException;
-import com.example.libraryAPI.loan.service.LoanAlreadyReturnedException;
-import com.example.libraryAPI.loan.service.LoanNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

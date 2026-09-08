@@ -1,6 +1,6 @@
-package com.example.libraryAPI.loan.persistence;
+package com.example.libraryAPI.repository;
 
-import com.example.libraryAPI.loan.domain.Loan;
+import com.example.libraryAPI.model.Loan;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

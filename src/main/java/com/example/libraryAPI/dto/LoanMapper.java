@@ -1,6 +1,6 @@
-package com.example.libraryAPI.loan.api;
+package com.example.libraryAPI.dto;
 
-import com.example.libraryAPI.loan.domain.Loan;
+import com.example.libraryAPI.model.Loan;
 
 public final class LoanMapper {
 

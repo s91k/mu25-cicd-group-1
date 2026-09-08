@@ -1,4 +1,4 @@
-package com.example.libraryAPI.loan.api;
+package com.example.libraryAPI.dto;
 
 public record CreateLoanRequest(
         int bookItemId,

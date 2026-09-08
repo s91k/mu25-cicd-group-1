@@ -1,6 +1,6 @@
-package com.example.libraryAPI.loan.service;
+package com.example.libraryAPI.service;
 
-import com.example.libraryAPI.loan.domain.Loan;
+import com.example.libraryAPI.model.Loan;
 
 import java.util.List;
 

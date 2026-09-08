@@ -1,4 +1,4 @@
-package com.example.libraryAPI.loan.service;
+package com.example.libraryAPI.exception;
 
 public class LoanAlreadyReturnedException extends RuntimeException {
 

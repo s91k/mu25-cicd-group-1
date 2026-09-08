@@ -1,7 +1,10 @@
-package com.example.libraryAPI.loan.api;
+package com.example.libraryAPI.controller;
 
-import com.example.libraryAPI.loan.domain.Loan;
-import com.example.libraryAPI.loan.service.LoanService;
+import com.example.libraryAPI.dto.CreateLoanRequest;
+import com.example.libraryAPI.dto.LoanMapper;
+import com.example.libraryAPI.dto.LoanResponse;
+import com.example.libraryAPI.model.Loan;
+import com.example.libraryAPI.service.LoanService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

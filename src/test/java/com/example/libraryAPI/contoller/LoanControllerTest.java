@@ -1,9 +1,11 @@
-package com.example.libraryAPI.loan.api;
+package com.example.libraryAPI.contoller;
 
-import com.example.libraryAPI.loan.domain.Loan;
-import com.example.libraryAPI.loan.service.BookItemAlreadyBorrowedException;
-import com.example.libraryAPI.loan.service.LoanNotFoundException;
-import com.example.libraryAPI.loan.service.LoanService;
+import com.example.libraryAPI.controller.LoanController;
+import com.example.libraryAPI.dto.CreateLoanRequest;
+import com.example.libraryAPI.model.Loan;
+import com.example.libraryAPI.exception.BookItemAlreadyBorrowedException;
+import com.example.libraryAPI.exception.LoanNotFoundException;
+import com.example.libraryAPI.service.LoanService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

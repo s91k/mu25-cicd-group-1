@@ -1,7 +1,10 @@
-package com.example.libraryAPI.loan.service;
+package com.example.libraryAPI.service;
 
-import com.example.libraryAPI.loan.domain.Loan;
-import com.example.libraryAPI.loan.persistence.LoanRepository;
+import com.example.libraryAPI.exception.BookItemAlreadyBorrowedException;
+import com.example.libraryAPI.exception.LoanAlreadyReturnedException;
+import com.example.libraryAPI.exception.LoanNotFoundException;
+import com.example.libraryAPI.model.Loan;
+import com.example.libraryAPI.repository.LoanRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

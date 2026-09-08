@@ -1,8 +1,8 @@
-package com.example.libraryAPI.loan.api;
+package com.example.libraryAPI.model;
 
 import java.time.LocalDate;
 
-public record LoanResponse(
+public record Loan(
         int id,
         int bookItemId,
         int borrowerId,

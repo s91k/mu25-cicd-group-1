@@ -1,8 +1,8 @@
-package com.example.libraryAPI.loan.domain;
+package com.example.libraryAPI.dto;
 
 import java.time.LocalDate;
 
-public record Loan(
+public record LoanResponse(
         int id,
         int bookItemId,
         int borrowerId,
