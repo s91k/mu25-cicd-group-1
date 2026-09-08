@@ -40,6 +40,6 @@ public class BookRepository {
                 book.getAuthorId()
         );
         books.add(savedBook);
-        return book;
+        return savedBook;
     }
 }
