@@ -1,4 +1,4 @@
-package com.example.libraryAPI.entity;
+package com.example.libraryAPI.model;
 
 public class Author {
     private int id;

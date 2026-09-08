@@ -1,12 +1,11 @@
 package com.example.libraryAPI.controller;
 
-import com.example.libraryAPI.entity.Author;
+import com.example.libraryAPI.model.Author;
 import com.example.libraryAPI.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

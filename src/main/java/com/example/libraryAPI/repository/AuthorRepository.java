@@ -1,6 +1,6 @@
 package com.example.libraryAPI.repository;
 
-import com.example.libraryAPI.entity.Author;
+import com.example.libraryAPI.model.Author;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.example.libraryAPI;
 
-import com.example.libraryAPI.entity.Author;
+import com.example.libraryAPI.model.Author;
 import com.example.libraryAPI.service.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
