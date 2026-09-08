@@ -35,6 +35,9 @@ public class AuthorControllerTest {
     @MockitoBean
     private AuthorService authorService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
     public void ShouldReturnAllAuthors() throws Exception {
         // Arrange
@@ -66,7 +69,7 @@ public class AuthorControllerTest {
     public void ShouldCreateAuthor() throws Exception{
         //Arrange
         Author author = new Author(1, "Astrid", "Lindgren");
-        String jsonRequest = new ObjectMapper().writeValueAsString(author);
+        String jsonRequest = objectMapper.writeValueAsString(author);
 
         when(authorService.createAuthor(any(Author.class)))
                 .thenReturn(new Author(1, "Astrid", "Lindgren"));
@@ -87,7 +90,7 @@ public class AuthorControllerTest {
         Author updated = new Author(1, "August", "Strindberg");
         when(authorService.updateAuthor(anyInt(), any(Author.class))).thenReturn(updated);
 
-        String jsonRequest = new ObjectMapper().writeValueAsString(updated);
+        String jsonRequest = objectMapper.writeValueAsString(updated);
 
         // Act & Assert
         mockMvc.perform(put("/authors/1")

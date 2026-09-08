@@ -14,7 +14,6 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @Autowired
 
     @GetMapping("/authors")
     public ResponseEntity<List<Author>> getAll() {

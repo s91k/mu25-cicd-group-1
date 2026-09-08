@@ -18,8 +18,7 @@ public class AuthorRepository {
     }
 
     public void addAuthor(Author author) {
-        author.setId(nextId);
-        nextId++;
+        author.setId(nextId++);
         authors.add(author);
     }
 
