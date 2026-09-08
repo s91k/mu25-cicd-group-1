@@ -11,11 +11,15 @@ public class AuthorRepository {
 
     private final List<Author> authors = new ArrayList<>();
 
+    private int nextId = 1;
+
     public List<Author> getAll() {
         return authors;
     }
 
     public void addAuthor(Author author) {
+        author.setId(nextId);
+        nextId++;
         authors.add(author);
     }
 

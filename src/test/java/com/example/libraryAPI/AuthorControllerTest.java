@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
@@ -64,7 +65,9 @@ public class AuthorControllerTest {
     @Test
     public void ShouldCreateAuthor() throws Exception{
         //Arrange
-        String jsonRequest = "{\"id\":1,\"firstName\":\"Astrid\",\"lastName\":\"Lindgren\"}";
+        Author author = new Author(1, "Astrid", "Lindgren");
+        String jsonRequest = new ObjectMapper().writeValueAsString(author);
+
         when(authorService.createAuthor(any(Author.class)))
                 .thenReturn(new Author(1, "Astrid", "Lindgren"));
 
@@ -84,7 +87,7 @@ public class AuthorControllerTest {
         Author updated = new Author(1, "August", "Strindberg");
         when(authorService.updateAuthor(anyInt(), any(Author.class))).thenReturn(updated);
 
-        String jsonRequest = "{\"id\":1,\"firstName\":\"August\",\"lastName\":\"Strindberg\"}";
+        String jsonRequest = new ObjectMapper().writeValueAsString(updated);
 
         // Act & Assert
         mockMvc.perform(put("/authors/1")
