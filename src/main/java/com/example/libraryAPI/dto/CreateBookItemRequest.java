@@ -1,4 +1,4 @@
-package com.example.libraryAPI.model;
+package com.example.libraryAPI.dto;
 
 public class CreateBookItemRequest {
 

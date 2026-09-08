@@ -1,7 +1,7 @@
 package com.example.libraryAPI.controller;
 
 import com.example.libraryAPI.model.BookItem;
-import com.example.libraryAPI.model.CreateBookItemRequest;
+import com.example.libraryAPI.dto.CreateBookItemRequest;
 import com.example.libraryAPI.service.BookItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
