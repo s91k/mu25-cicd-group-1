@@ -26,7 +26,7 @@ class UserControllerTest {
     void createUser_returnsCreatedUser() throws Exception {
         String body = objectMapper.writeValueAsString(new TestUserRequest("Karl", "Karlsson"));
 
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isCreated())
@@ -39,7 +39,7 @@ class UserControllerTest {
     void createUser_withBlankFirstName_returnsBadRequest() throws Exception {
         String body = objectMapper.writeValueAsString(new TestUserRequest("", "Karlsson"));
 
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isBadRequest());
@@ -49,7 +49,7 @@ class UserControllerTest {
     void createUser_withBlankLastName_returnsBadRequest() throws Exception {
         String body = objectMapper.writeValueAsString(new TestUserRequest("Karl", ""));
 
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isBadRequest());
@@ -57,20 +57,20 @@ class UserControllerTest {
 
     @Test
     void getAllUsers_returnsOk() throws Exception {
-        mockMvc.perform(get("/api/users"))
+        mockMvc.perform(get("/users"))
                 .andExpect(status().isOk());
     }
 
     @Test
     void getUserById_whenExists_returnsUser() throws Exception {
         String createBody = objectMapper.writeValueAsString(new TestUserRequest("Erik", "Eriksson"));
-        String createResponse = mockMvc.perform(post("/api/users")
+        String createResponse = mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createBody))
                 .andReturn().getResponse().getContentAsString();
         long id = objectMapper.readTree(createResponse).get("id").asLong();
 
-        mockMvc.perform(get("/api/users/" + id))
+        mockMvc.perform(get("/users/" + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.firstName").value("Erik"));
@@ -78,14 +78,14 @@ class UserControllerTest {
 
     @Test
     void getUserById_whenMissing_returnsNotFound() throws Exception {
-        mockMvc.perform(get("/api/users/999999"))
+        mockMvc.perform(get("/users/999999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void updateUser_returnsUpdatedUser() throws Exception {
         String createBody = objectMapper.writeValueAsString(new TestUserRequest("Sven", "Svensson"));
-        String createResponse = mockMvc.perform(post("/api/users")
+        String createResponse = mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createBody))
                 .andReturn().getResponse().getContentAsString();
@@ -93,7 +93,7 @@ class UserControllerTest {
 
         String updateBody = objectMapper.writeValueAsString(new TestUserRequest("Sven", "Andersson"));
 
-        mockMvc.perform(put("/api/users/" + id)
+        mockMvc.perform(put("/users/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateBody))
                 .andExpect(status().isOk())
@@ -104,7 +104,7 @@ class UserControllerTest {
     void updateUser_whenMissing_returnsNotFound() throws Exception {
         String updateBody = objectMapper.writeValueAsString(new TestUserRequest("Ghost", "User"));
 
-        mockMvc.perform(put("/api/users/999999")
+        mockMvc.perform(put("/users/999999")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateBody))
                 .andExpect(status().isNotFound());
@@ -113,22 +113,22 @@ class UserControllerTest {
     @Test
     void deleteUser_removesUser() throws Exception {
         String createBody = objectMapper.writeValueAsString(new TestUserRequest("Anna", "Andersson"));
-        String createResponse = mockMvc.perform(post("/api/users")
+        String createResponse = mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createBody))
                 .andReturn().getResponse().getContentAsString();
         long id = objectMapper.readTree(createResponse).get("id").asLong();
 
-        mockMvc.perform(delete("/api/users/" + id))
+        mockMvc.perform(delete("/users/" + id))
                 .andExpect(status().isNoContent());
 
-        mockMvc.perform(get("/api/users/" + id))
+        mockMvc.perform(get("/users/" + id))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void deleteUser_whenMissing_returnsNotFound() throws Exception {
-        mockMvc.perform(delete("/api/users/999999"))
+        mockMvc.perform(delete("/users/999999"))
                 .andExpect(status().isNotFound());
     }
 
