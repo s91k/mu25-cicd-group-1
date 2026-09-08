@@ -1,6 +1,8 @@
 package com.example.libraryAPI.service;
 
 import com.example.libraryAPI.dto.CreateBookRequest;
+import com.example.libraryAPI.exception.AuthorNotFoundException;
+import com.example.libraryAPI.model.Author;
 import com.example.libraryAPI.model.Book;
 import com.example.libraryAPI.repository.BookRepository;
 import org.junit.jupiter.api.Test;
@@ -14,14 +16,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
 
     @Mock
     private BookRepository bookRepository;
+
+    @Mock
+    private AuthorService authorService;
 
     @InjectMocks
     private BookService bookService;
@@ -81,7 +85,11 @@ class BookServiceTest {
         // Arrangte
         CreateBookRequest request = new CreateBookRequest("Dune", 3);
 
+        Author author = new Author(3, "Frank", "Herbert");
+
         Book savedBook = new Book(4, "Dune", 3);
+
+        when(authorService.getById(3)).thenReturn(author);
 
         when(bookRepository.save(any(Book.class)))
                 .thenReturn(savedBook);
@@ -94,5 +102,20 @@ class BookServiceTest {
         assertEquals(3, result.getAuthorId());
 
         verify(bookRepository).save(any(Book.class));
+    }
+
+    @Test
+    void shouldThrowWhenAuthorDoesNotExist() {
+        CreateBookRequest request = new CreateBookRequest("Dune", 99);
+
+        when(authorService.getById(99)).thenReturn(null);
+
+        assertThrows(
+                AuthorNotFoundException.class,
+                () -> bookService.createBook(request)
+        );
+
+        verify(authorService).getById(99);
+        verify(bookRepository, never()).save(any(Book.class));
     }
 }
