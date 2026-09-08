@@ -29,7 +29,17 @@ public class BookRepository {
     }
 
     public Book save(Book book) {
-        books.add(book);
+        int newId = books.stream()
+                .mapToInt(Book::getId)
+                .max()
+                .orElse(0) + 1;
+
+        Book savedBook = new Book(
+                newId,
+                book.getTitle(),
+                book.getAuthorId()
+        );
+        books.add(savedBook);
         return book;
     }
 }

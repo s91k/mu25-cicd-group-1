@@ -1,12 +1,12 @@
 package com.example.libraryAPI.controller;
 
+import com.example.libraryAPI.dto.CreateBookRequest;
 import com.example.libraryAPI.model.Book;
 import com.example.libraryAPI.service.BookService;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,4 +29,13 @@ public class BookController {
     public ResponseEntity<Book> getById(@PathVariable int id) {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
+
+    @PostMapping
+    public ResponseEntity<Book> createBook(@RequestBody CreateBookRequest request) {
+        Book createdBook = bookService.createBook(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdBook);
+    }
+
 }

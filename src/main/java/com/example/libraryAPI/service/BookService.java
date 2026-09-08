@@ -1,5 +1,6 @@
 package com.example.libraryAPI.service;
 
+import com.example.libraryAPI.dto.CreateBookRequest;
 import com.example.libraryAPI.model.Book;
 import com.example.libraryAPI.repository.BookRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,15 @@ public class BookService {
         }
 
         return book;
+    }
+
+    public Book createBook(CreateBookRequest request) {
+        Book book = new Book(
+                0,
+                request.getTitle(),
+                request.getAuthorId()
+        );
+        return bookRepository.save(book);
     }
 
 

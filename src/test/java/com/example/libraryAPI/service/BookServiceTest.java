@@ -1,8 +1,8 @@
-package com.example.libraryAPI;
+package com.example.libraryAPI.service;
 
+import com.example.libraryAPI.dto.CreateBookRequest;
 import com.example.libraryAPI.model.Book;
 import com.example.libraryAPI.repository.BookRepository;
-import com.example.libraryAPI.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +32,6 @@ class BookServiceTest {
         List<Book> books = List.of(
                 new Book(1, "The Hobbit", 1),
                 new Book(2, "1984", 2)
-                // new Book(3, "Twilight", 3) = error, expected 2
         );
 
         when(bookRepository.findAll()).thenReturn(books);
@@ -74,5 +74,25 @@ class BookServiceTest {
         );
 
         verify(bookRepository).findById(99);
+    }
+
+    @Test
+    void shouldCreateBook() {
+        // Arrangte
+        CreateBookRequest request = new CreateBookRequest("Dune", 3);
+
+        Book savedBook = new Book(4, "Dune", 3);
+
+        when(bookRepository.save(any(Book.class)))
+                .thenReturn(savedBook);
+
+        // Act & Assert
+        Book result = bookService.createBook(request);
+
+        assertEquals(4, result.getId());
+        assertEquals("Dune", result.getTitle());
+        assertEquals(3, result.getAuthorId());
+
+        verify(bookRepository).save(any(Book.class));
     }
 }
