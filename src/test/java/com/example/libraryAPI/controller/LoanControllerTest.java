@@ -1,6 +1,5 @@
-package com.example.libraryAPI.contoller;
+package com.example.libraryAPI.controller;
 
-import com.example.libraryAPI.controller.LoanController;
 import com.example.libraryAPI.dto.CreateLoanRequest;
 import com.example.libraryAPI.model.Loan;
 import com.example.libraryAPI.exception.BookItemAlreadyBorrowedException;
