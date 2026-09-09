@@ -228,8 +228,6 @@ dev
  ↓
 PR → main
  ↓
-Tests pass
- ↓
 Review
  ↓
 Merge
@@ -240,8 +238,6 @@ GitHub Actions
  ↓
 Deploy PROD
 ```
-
-This means testing happens **before merge**, while deployment happens **after approved code is pushed to the target branch**.
 
 ---
 
