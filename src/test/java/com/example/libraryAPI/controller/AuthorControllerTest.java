@@ -1,4 +1,4 @@
-package com.example.libraryAPI;
+package com.example.libraryAPI.controller;
 
 import com.example.libraryAPI.model.Author;
 import com.example.libraryAPI.service.AuthorService;
@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import com.example.libraryAPI.controller.AuthorController;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import org.springframework.http.MediaType;
