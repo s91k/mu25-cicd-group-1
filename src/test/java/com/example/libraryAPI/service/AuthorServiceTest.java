@@ -1,5 +1,6 @@
 package com.example.libraryAPI.service;
 
+import com.example.libraryAPI.exception.AuthorNotFoundException;
 import com.example.libraryAPI.model.Author;
 import com.example.libraryAPI.repository.AuthorRepository;
 import org.junit.jupiter.api.Test;
@@ -10,10 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthorServiceTest {
@@ -51,16 +51,13 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public void ShouldReturnNullIfAuthorNotFound() {
+    public void ShouldThrowExceptionWhenAuthorNotFound() {
         // arrange
         List<Author> authors = List.of(new Author(1, "George", "Orwell"));
         when(authorRepository.getAll()).thenReturn(authors);
 
-        // act
-        Author result = authorService.getById(2);
-
-        // assert
-        assertNull(result);
+        // act & assert
+        assertThrows(AuthorNotFoundException.class, () -> authorService.getById(2));
     }
 
     @Test
@@ -91,17 +88,15 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public void ShouldReturnNullWhenUpdatingNonExistentAuthor(){
+    public void ShouldThrowExceptionWhenUpdatingNonExistentAuthor(){
         // arrange
         Author updatedAuthor = new Author("Eric", "Blair");
         List<Author> authors = List.of(new Author(1, "George", "Orwell"));
         when(authorRepository.getAll()).thenReturn(authors);
 
-        // act
-        Author result = authorService.updateAuthor(2, updatedAuthor);
+        // act & assert
+        assertThrows(AuthorNotFoundException.class, () -> authorService.updateAuthor(2, updatedAuthor));
 
-        // assert
-        assertNull(result);
     }
 
     @Test
@@ -118,15 +113,12 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public void ShouldReturnNullWhenDeletingNonExistentAuthor(){
+    public void ShouldThrowExceptionWhenDeletingNonExistentAuthor(){
         // arrange
         List<Author> authors = List.of(new Author(1, "George", "Orwell"));
         when(authorRepository.getAll()).thenReturn(authors);
 
-        // act
-        Author result = authorService.deleteAuthor(2);
-
-        // assert
-        assertNull(result);
+        // act & assert
+        assertThrows(AuthorNotFoundException.class, () -> authorService.deleteAuthor(2));
     }
 }
