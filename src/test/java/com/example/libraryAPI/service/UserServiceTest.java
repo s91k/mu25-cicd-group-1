@@ -36,13 +36,10 @@ class UserServiceTest {
     }
 
     private static UserRequest request(String firstName, String lastName) {
-        UserRequest request = new UserRequest();
-        request.setFirstName(firstName);
-        request.setLastName(lastName);
-        return request;
+        return new UserRequest(firstName, lastName);
     }
 
-    private static User user(Long id, String firstName, String lastName) {
+    private static User createUserWithId(Long id, String firstName, String lastName) {
         User user = new User(firstName, lastName);
         user.setId(id);
         return user;
@@ -92,6 +89,17 @@ class UserServiceTest {
     }
 
     @Test
+    void create_withNullLastName_throwsIllegalArgumentException() {
+        UserRequest request = request("Karl", null);
+
+        assertThatThrownBy(() -> userService.create(request))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("lastName");
+
+        verify(userRepository, never()).save(any());
+    }
+
+    @Test
     void create_withBlankLastName_throwsIllegalArgumentException() {
         UserRequest request = request("Karl", "  ");
 
@@ -105,8 +113,8 @@ class UserServiceTest {
     @Test
     void findAll_returnsAllUsers() {
         List<User> users = List.of(
-                user(1L, "Erik", "Eriksson"),
-                user(2L, "Anna", "Andersson"));
+                createUserWithId(1L, "Erik", "Eriksson"),
+                createUserWithId(2L, "Anna", "Andersson"));
         when(userRepository.findAll()).thenReturn(users);
 
         List<User> result = userService.findAll();
@@ -125,7 +133,7 @@ class UserServiceTest {
 
     @Test
     void findById_whenExists_returnsUser() {
-        User existing = user(1L, "Erik", "Eriksson");
+        User existing = createUserWithId(1L, "Erik", "Eriksson");
         when(userRepository.findById(1L)).thenReturn(Optional.of(existing));
 
         User result = userService.findById(1L);
@@ -145,7 +153,7 @@ class UserServiceTest {
 
     @Test
     void update_withValidRequest_updatesAndReturnsUser() {
-        User existing = user(1L, "Sven", "Svensson");
+        User existing = createUserWithId(1L, "Sven", "Svensson");
         when(userRepository.findById(1L)).thenReturn(Optional.of(existing));
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -181,7 +189,7 @@ class UserServiceTest {
 
     @Test
     void delete_whenExists_removesUser() {
-        User existing = user(1L, "Anna", "Andersson");
+        User existing = createUserWithId(1L, "Anna", "Andersson");
         when(userRepository.findById(1L)).thenReturn(Optional.of(existing));
 
         userService.delete(1L);

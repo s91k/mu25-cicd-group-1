@@ -8,7 +8,13 @@ public class UserRequest {
     public UserRequest() {
     }
 
+    public UserRequest(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
+
         return firstName;
     }
 
@@ -17,10 +23,11 @@ public class UserRequest {
     }
 
     public String getLastName() {
+
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String lastName){
+       this.lastName = lastName;
     }
 }
