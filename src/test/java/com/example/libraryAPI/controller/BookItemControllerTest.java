@@ -1,7 +1,10 @@
 package com.example.libraryAPI.controller;
 
+import com.example.libraryAPI.exception.GlobalExceptionHandler;
 import com.example.libraryAPI.repository.BookItemRepository;
 import com.example.libraryAPI.service.BookItemService;
+import com.example.libraryAPI.repository.BookRepository;
+import com.example.libraryAPI.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -17,24 +20,31 @@ class BookItemControllerTest {
 
     private BookItemService service;
     private MockMvc mockMvc;
+    private int bookId;
 
     @BeforeEach
     void setUp() {
-        service = new BookItemService(new BookItemRepository());
+        BookRepository bookRepository = new BookRepository();
+        Book book = bookRepository.save(new Book(0, "Testbok", 1));
+        bookId = book.getId();
+
+        service = new BookItemService(new BookItemRepository(), bookRepository);
+
         mockMvc = MockMvcBuilders
                 .standaloneSetup(new BookItemController(service))
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
     }
 
     @Test
     void findAllReturnsItems() throws Exception {
-        service.create(10);
+        service.create(bookId);
 
         mockMvc.perform(get("/book-items"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].bookId").value(10));
+                .andExpect(jsonPath("$[0].bookId").value(bookId));
     }
 
     @Test
@@ -46,12 +56,12 @@ class BookItemControllerTest {
 
     @Test
     void findByIdReturnsExistingItem() throws Exception {
-        service.create(10);
+        service.create(bookId);
 
         mockMvc.perform(get("/book-items/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.bookId").value(10));
+                .andExpect(jsonPath("$.bookId").value(bookId));
     }
 
     @Test
@@ -64,17 +74,15 @@ class BookItemControllerTest {
     void createReturnsCreatedItemAndLocation() throws Exception {
         mockMvc.perform(post("/book-items")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"bookId": 10}
-                                """))
+                        .content("{\"bookId\": " + bookId + "}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "/book-items/1"))
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.bookId").value(10));
+                .andExpect(jsonPath("$.bookId").value(bookId));
 
         mockMvc.perform(get("/book-items/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.bookId").value(10));
+                .andExpect(jsonPath("$.bookId").value(bookId));
     }
 
     @Test
@@ -92,6 +100,16 @@ class BookItemControllerTest {
                             .content(json))
                     .andExpect(status().isBadRequest());
         }
+
+        assertTrue(service.findAll().isEmpty());
+    }
+
+    @Test
+    void missingBookReturnsNotFound() throws Exception {
+        mockMvc.perform(post("/book-items")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"bookId\": 999}"))
+                .andExpect(status().isNotFound());
 
         assertTrue(service.findAll().isEmpty());
     }
