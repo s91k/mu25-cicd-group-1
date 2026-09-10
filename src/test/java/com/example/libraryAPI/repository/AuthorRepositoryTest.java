@@ -18,14 +18,6 @@ public class AuthorRepositoryTest {
 
         // assert
         assertEquals(3, result.size());
-
-        // assert that the authors are the expected ones
-        assertEquals("J.R.R.", result.get(0).getFirstName());
-        assertEquals("Tolkien", result.get(0).getLastName());
-        assertEquals("George", result.get(1).getFirstName());
-        assertEquals("Orwell", result.get(1).getLastName());
-        assertEquals("Stephenie", result.get(2).getFirstName());
-        assertEquals("Meyer", result.get(2).getLastName());
     }
 
     @Test

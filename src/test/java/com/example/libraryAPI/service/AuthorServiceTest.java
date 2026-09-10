@@ -13,6 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthorServiceTest {
@@ -50,6 +51,19 @@ public class AuthorServiceTest {
     }
 
     @Test
+    public void ShouldReturnNullIfAuthorNotFound() {
+        // arrange
+        List<Author> authors = List.of(new Author(1, "George", "Orwell"));
+        when(authorRepository.getAll()).thenReturn(authors);
+
+        // act
+        Author result = authorService.getById(2);
+
+        // assert
+        assertNull(result);
+    }
+
+    @Test
     public void ShouldCreateAuthor(){
         // arrange
         Author newAuthor = new Author("J.K.", "Rowling");
@@ -77,6 +91,20 @@ public class AuthorServiceTest {
     }
 
     @Test
+    public void ShouldReturnNullWhenUpdatingNonExistentAuthor(){
+        // arrange
+        Author updatedAuthor = new Author("Eric", "Blair");
+        List<Author> authors = List.of(new Author(1, "George", "Orwell"));
+        when(authorRepository.getAll()).thenReturn(authors);
+
+        // act
+        Author result = authorService.updateAuthor(2, updatedAuthor);
+
+        // assert
+        assertNull(result);
+    }
+
+    @Test
     public void ShouldDeleteAuthor() {
         // arrange
         Author existingAuthor = new Author(1, "George", "Orwell");
@@ -87,5 +115,18 @@ public class AuthorServiceTest {
         // assert
         assertEquals(existingAuthor, result);
         verify(authorRepository).removeAuthor(existingAuthor);
+    }
+
+    @Test
+    public void ShouldReturnNullWhenDeletingNonExistentAuthor(){
+        // arrange
+        List<Author> authors = List.of(new Author(1, "George", "Orwell"));
+        when(authorRepository.getAll()).thenReturn(authors);
+
+        // act
+        Author result = authorService.deleteAuthor(2);
+
+        // assert
+        assertNull(result);
     }
 }
