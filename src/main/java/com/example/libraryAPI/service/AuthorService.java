@@ -1,5 +1,6 @@
 package com.example.libraryAPI.service;
 
+import com.example.libraryAPI.exception.AuthorNotFoundException;
 import com.example.libraryAPI.model.Author;
 import com.example.libraryAPI.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class AuthorService {
 
     public Author getById(int id){
         return authorRepository.getAll().stream()
-                .filter(a->a.getId()==id).findFirst().orElse(null);
+                .filter(a->a.getId()==id).findFirst().orElseThrow(()-> new AuthorNotFoundException("Author with id " + id + " not found"));
     }
 
     public Author createAuthor(Author author){
@@ -28,7 +29,7 @@ public class AuthorService {
 
     public Author updateAuthor(int id, Author updatedAuthor){
         Author existing = authorRepository.getAll().stream()
-                .filter(a->a.getId()==id).findFirst().orElse(null);
+                .filter(a->a.getId()==id).findFirst().orElseThrow(()-> new AuthorNotFoundException("Author with id " + id + " not found"));
 
         if (existing != null){
             existing.setFirstName(updatedAuthor.getFirstName());
@@ -39,11 +40,8 @@ public class AuthorService {
 
     public Author deleteAuthor(int id){
         Author existing = authorRepository.getAll().stream()
-                .filter(a->a.getId()==id).findFirst().orElse(null);
-
-        if (existing != null){
+                .filter(a->a.getId()==id).findFirst().orElseThrow(()-> new AuthorNotFoundException("Author with id " + id + " not found"));
         authorRepository.removeAuthor(existing);
-        }
         return existing;
     }
 

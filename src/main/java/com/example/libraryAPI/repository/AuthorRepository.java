@@ -17,6 +17,12 @@ public class AuthorRepository {
         return authors;
     }
 
+    public AuthorRepository() {
+        addAuthor(new Author( "J.R.R.", "Tolkien"));
+        addAuthor(new Author( "George", "Orwell"));
+        addAuthor(new Author( "Stephenie", "Meyer"));
+    }
+
     public void addAuthor(Author author) {
         author.setId(nextId++);
         authors.add(author);
